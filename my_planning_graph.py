@@ -495,7 +495,8 @@ class PlanningGraph():
         :return: bool
         """
         # TODO test for negation between nodes
-        return False
+        mut_excl = (node_s1.symbol == node_s2.symbol) and (node_s1.is_pos != node_s2.is_pos)
+        return mut_excl
 
     def inconsistent_support_mutex(self, node_s1: PgNode_s, node_s2: PgNode_s):
         """
