@@ -144,8 +144,28 @@ class AirCargoProblem(Problem):
             e.g. 'FTTTFF'
         :return: list of Action objects
         """
-        # TODO implement
+        # Create knowledge class 
+        knowledge_base = PropKB()
+        knowledge_base.tell(decode_state(state, self.state_map).pos_sentence())
+
+        # For all actions, add to possible list if conditions are met
         possible_actions = []
+        for actions in self.actions_list:
+            cond_met = True
+
+            for clause in actions.precond_neg:
+                if clause in knowledge_base.clauses:
+                    cond_met = False
+                    break
+
+            for clause in actions.precond_pos:
+                if clause not in knowledge_base.clauses:
+                    cond_met = False
+                    break
+
+            if cond_met:
+                possible_actions.append(actions)
+
         return possible_actions
 
     def result(self, state: str, action: Action):
