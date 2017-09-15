@@ -454,7 +454,13 @@ class PlanningGraph():
         """
 
         # TODO test for Competing Needs between nodes
-        return False
+        comp_needs = False
+        for a1 in node_a1.parents:
+            for a2 in node_a2.parents:
+                if a1.is_mutex(a2):
+                    comp_needs = True
+
+        return comp_needs
 
     def update_s_mutex(self, nodeset: set):
         """ Determine and update sibling mutual exclusion for S-level nodes
