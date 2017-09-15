@@ -177,8 +177,30 @@ class AirCargoProblem(Problem):
         :param action: Action applied
         :return: resulting state after action
         """
-        # TODO implement
-        new_state = FluentState([], [])
+        # Get resulting state
+        # Is this really needed?
+        #new_state = FluentState([], [])
+        new_state = decode_state(state, self.state_map)
+
+        neg_new_state = new_state.neg
+        pos_new_state = new_state.pos
+
+        # Add effect to the positive or negative state list
+        for effect in action.effect_add:
+            pos_new_state.append(effect)
+
+            if effect in neg_new_state:
+                neg_new_state.remove(effect)
+
+        for effect in action.effect_rem:
+            neg_new_state.append(effect)
+
+            if effect in pos_new_state:
+                pos_new_state.remove(effect)
+
+        new_state = FluentState(pos_new_state, neg_new_state)
+
+
         return encode_state(new_state, self.state_map)
 
     def goal_test(self, state: str) -> bool:
