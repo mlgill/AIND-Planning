@@ -1,4 +1,3 @@
-#!/usr/bin/env pypy3
 import argparse
 from timeit import default_timer as timer
 from aimacode.search import InstrumentedProblem
