@@ -517,7 +517,7 @@ class PlanningGraph():
         # TODO test for Inconsistent Support between nodes
         for s1 in node_s1.parents:
             for s2 in node_s2.parents:
-                if not a1.is_mutex(a2):
+                if not s1.is_mutex(s2):
                     return False
         return True
 
@@ -538,5 +538,5 @@ class PlanningGraph():
                     level_sum += level
                     break
 
-            
+
         return level_sum
